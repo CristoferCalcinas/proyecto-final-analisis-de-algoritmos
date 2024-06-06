@@ -19,28 +19,18 @@ const list_procedures = [
         p_carnet VARCHAR,
         p_fecha_nacimiento DATE,
         p_telefono VARCHAR,
-        p_direccion VARCHAR,
-        p_id_facultad INT
+        p_direccion VARCHAR
     ) AS
     $$
     DECLARE
         create_email VARCHAR(100);
-        facultad_existente INT;
     BEGIN
-        -- Verificar si la facultad existe
-        SELECT COUNT(*) INTO facultad_existente FROM facultad WHERE id = p_id_facultad;
-
-        -- Si no existe, asignar 0 a p_id_facultad
-        IF facultad_existente = 0 THEN
-            p_id_facultad := 0;
-        END IF;
-
         -- Crear el email
         create_email := CONCAT(p_nombre, '.', p_apellido, '.', p_carnet, '@uab.edu.bo');
 
         -- Realizar la inserción
-        INSERT INTO estudiante(nombre, apellido, carnet, fecha_nacimiento, email, telefono, direccion, id_facultad)
-        VALUES (p_nombre, p_apellido, p_carnet, p_fecha_nacimiento, create_email, p_telefono, p_direccion, p_id_facultad);
+        INSERT INTO estudiante(nombre, apellido, carnet, fecha_nacimiento, email, telefono, direccion)
+        VALUES (p_nombre, p_apellido, p_carnet, p_fecha_nacimiento, create_email, p_telefono, p_direccion);
         COMMIT;
     END;
     $$ LANGUAGE plpgsql;`,
@@ -87,36 +77,36 @@ const list_facultad_insert = [
     "CALL insertar_facultad('Facultad de Comunicación', 'Descripción de la Facultad de Comunicación');"
 ];
 const list_estudiantes_insert = [
-    "CALL insertar_estudiantes('Juan', 'Perez', 'CARNET01', '2000-01-01', '555-123401', 'Calle Falsa 101', 1);",
-    "CALL insertar_estudiantes('Ana', 'Lopez', 'CARNET02', '2000-02-01', '555-123402', 'Calle Falsa 102', 2);",
-    "CALL insertar_estudiantes('Luis', 'Martinez', 'CARNET03', '2000-03-01', '555-123403', 'Calle Falsa 103', 3);",
-    "CALL insertar_estudiantes('Maria', 'Gomez', 'CARNET04', '2000-04-01', '555-123404', 'Calle Falsa 104', 4);",
-    "CALL insertar_estudiantes('Carlos', 'Hernandez', 'CARNET05', '2000-05-01', '555-123405', 'Calle Falsa 105', 5);",
-    "CALL insertar_estudiantes('Elena', 'Rodriguez', 'CARNET06', '2000-06-01', '555-123406', 'Calle Falsa 106', 6);",
-    "CALL insertar_estudiantes('Jorge', 'Fernandez', 'CARNET07', '2000-07-01', '555-123407', 'Calle Falsa 107', 7);",
-    "CALL insertar_estudiantes('Sofia', 'Ramirez', 'CARNET08', '2000-08-01', '555-123408', 'Calle Falsa 108', 8);",
-    "CALL insertar_estudiantes('Daniel', 'Sanchez', 'CARNET09', '2000-09-01', '555-123409', 'Calle Falsa 109', 9);",
-    "CALL insertar_estudiantes('Laura', 'Torres', 'CARNET10', '2000-10-01', '555-123410', 'Calle Falsa 110', 10);",
-    "CALL insertar_estudiantes('Pedro', 'Diaz', 'CARNET11', '2000-11-01', '555-123411', 'Calle Falsa 111', 1);",
-    "CALL insertar_estudiantes('Carmen', 'Vega', 'CARNET12', '2000-12-01', '555-123412', 'Calle Falsa 112', 2);",
-    "CALL insertar_estudiantes('Miguel', 'Ramos', 'CARNET13', '2001-01-01', '555-123413', 'Calle Falsa 113', 3);",
-    "CALL insertar_estudiantes('Julia', 'Castro', 'CARNET14', '2001-02-01', '555-123414', 'Calle Falsa 114', 4);",
-    "CALL insertar_estudiantes('David', 'Mendez', 'CARNET15', '2001-03-01', '555-123415', 'Calle Falsa 115', 5);",
-    "CALL insertar_estudiantes('Clara', 'Guerrero', 'CARNET16', '2001-04-01', '555-123416', 'Calle Falsa 116', 6);",
-    "CALL insertar_estudiantes('Sergio', 'Flores', 'CARNET17', '2001-05-01', '555-123417', 'Calle Falsa 117', 7);",
-    "CALL insertar_estudiantes('Patricia', 'Cruz', 'CARNET18', '2001-06-01', '555-123418', 'Calle Falsa 118', 8);",
-    "CALL insertar_estudiantes('Roberto', 'Morales', 'CARNET19', '2001-07-01', '555-123419', 'Calle Falsa 119', 9);",
-    "CALL insertar_estudiantes('Isabel', 'Ortega', 'CARNET20', '2001-08-01', '555-123420', 'Calle Falsa 120', 10);",
-    "CALL insertar_estudiantes('Gabriel', 'Jimenez', 'CARNET21', '2001-09-01', '555-123421', 'Calle Falsa 121', 1);",
-    "CALL insertar_estudiantes('Monica', 'Vargas', 'CARNET22', '2001-10-01', '555-123422', 'Calle Falsa 122', 2);",
-    "CALL insertar_estudiantes('Francisco', 'Reyes', 'CARNET23', '2001-11-01', '555-123423', 'Calle Falsa 123', 3);",
-    "CALL insertar_estudiantes('Raquel', 'Ruiz', 'CARNET24', '2001-12-01', '555-123424', 'Calle Falsa 124', 4);",
-    "CALL insertar_estudiantes('Enrique', 'Silva', 'CARNET25', '2002-01-01', '555-123425', 'Calle Falsa 125', 5);",
-    "CALL insertar_estudiantes('Angela', 'Herrera', 'CARNET26', '2002-02-01', '555-123426', 'Calle Falsa 126', 6);",
-    "CALL insertar_estudiantes('Oscar', 'Muñoz', 'CARNET27', '2002-03-01', '555-123427', 'Calle Falsa 127', 7);",
-    "CALL insertar_estudiantes('Rosa', 'Navarro', 'CARNET28', '2002-04-01', '555-123428', 'Calle Falsa 128', 8);",
-    "CALL insertar_estudiantes('Rafael', 'Iglesias', 'CARNET29', '2002-05-01', '555-123429', 'Calle Falsa 129', 9);",
-    "CALL insertar_estudiantes('Sandra', 'Gimenez', 'CARNET30', '2002-06-01', '555-123430', 'Calle Falsa 130', 10);"
+    "CALL insertar_estudiantes('Juan', 'Perez', 'CARNET01', '2000-01-01', '555-123401', 'Calle Falsa 101');",
+    "CALL insertar_estudiantes('Ana', 'Lopez', 'CARNET02', '2000-02-01', '555-123402', 'Calle Falsa 102');",
+    "CALL insertar_estudiantes('Luis', 'Martinez', 'CARNET03', '2000-03-01', '555-123403', 'Calle Falsa 103');",
+    "CALL insertar_estudiantes('Maria', 'Gomez', 'CARNET04', '2000-04-01', '555-123404', 'Calle Falsa 104');",
+    "CALL insertar_estudiantes('Carlos', 'Hernandez', 'CARNET05', '2000-05-01', '555-123405', 'Calle Falsa 105');",
+    "CALL insertar_estudiantes('Elena', 'Rodriguez', 'CARNET06', '2000-06-01', '555-123406', 'Calle Falsa 106');",
+    "CALL insertar_estudiantes('Jorge', 'Fernandez', 'CARNET07', '2000-07-01', '555-123407', 'Calle Falsa 107');",
+    "CALL insertar_estudiantes('Sofia', 'Ramirez', 'CARNET08', '2000-08-01', '555-123408', 'Calle Falsa 108');",
+    "CALL insertar_estudiantes('Daniel', 'Sanchez', 'CARNET09', '2000-09-01', '555-123409', 'Calle Falsa 109');",
+    "CALL insertar_estudiantes('Laura', 'Torres', 'CARNET10', '2000-10-01', '555-123410', 'Calle Falsa 110');",
+    "CALL insertar_estudiantes('Pedro', 'Diaz', 'CARNET11', '2000-11-01', '555-123411', 'Calle Falsa 111');",
+    "CALL insertar_estudiantes('Carmen', 'Vega', 'CARNET12', '2000-12-01', '555-123412', 'Calle Falsa 112');",
+    "CALL insertar_estudiantes('Miguel', 'Ramos', 'CARNET13', '2001-01-01', '555-123413', 'Calle Falsa 113');",
+    "CALL insertar_estudiantes('Julia', 'Castro', 'CARNET14', '2001-02-01', '555-123414', 'Calle Falsa 114');",
+    "CALL insertar_estudiantes('David', 'Mendez', 'CARNET15', '2001-03-01', '555-123415', 'Calle Falsa 115');",
+    "CALL insertar_estudiantes('Clara', 'Guerrero', 'CARNET16', '2001-04-01', '555-123416', 'Calle Falsa 116');",
+    "CALL insertar_estudiantes('Sergio', 'Flores', 'CARNET17', '2001-05-01', '555-123417', 'Calle Falsa 117');",
+    "CALL insertar_estudiantes('Patricia', 'Cruz', 'CARNET18', '2001-06-01', '555-123418', 'Calle Falsa 118');",
+    "CALL insertar_estudiantes('Roberto', 'Morales', 'CARNET19', '2001-07-01', '555-123419', 'Calle Falsa 119');",
+    "CALL insertar_estudiantes('Isabel', 'Ortega', 'CARNET20', '2001-08-01', '555-123420', 'Calle Falsa 120');",
+    "CALL insertar_estudiantes('Gabriel', 'Jimenez', 'CARNET21', '2001-09-01', '555-123421', 'Calle Falsa 121');",
+    "CALL insertar_estudiantes('Monica', 'Vargas', 'CARNET22', '2001-10-01', '555-123422', 'Calle Falsa 122');",
+    "CALL insertar_estudiantes('Francisco', 'Reyes', 'CARNET23', '2001-11-01', '555-123423', 'Calle Falsa 123');",
+    "CALL insertar_estudiantes('Raquel', 'Ruiz', 'CARNET24', '2001-12-01', '555-123424', 'Calle Falsa 124');",
+    "CALL insertar_estudiantes('Enrique', 'Silva', 'CARNET25', '2002-01-01', '555-123425', 'Calle Falsa 125');",
+    "CALL insertar_estudiantes('Angela', 'Herrera', 'CARNET26', '2002-02-01', '555-123426', 'Calle Falsa 126');",
+    "CALL insertar_estudiantes('Oscar', 'Muñoz', 'CARNET27', '2002-03-01', '555-123427', 'Calle Falsa 127');",
+    "CALL insertar_estudiantes('Rosa', 'Navarro', 'CARNET28', '2002-04-01', '555-123428', 'Calle Falsa 128');",
+    "CALL insertar_estudiantes('Rafael', 'Iglesias', 'CARNET29', '2002-05-01', '555-123429', 'Calle Falsa 129');",
+    "CALL insertar_estudiantes('Sandra', 'Gimenez', 'CARNET30', '2002-06-01', '555-123430', 'Calle Falsa 130');"
 ];
 const list_profesores_insert = [
     "CALL insertar_profesores('Ana', 'Gomez', '555-6789', 'Avenida Siempre Viva 456');",
@@ -170,7 +160,7 @@ export async function GET(request: Request) {
     }
     );
 
-    const cursos = await prisma.curso.findMany();
-    console.log(cursos);
+    // const cursos = await prisma.curso.findMany();
+    // console.log(cursos);
     return NextResponse.json({ message: 'Datos y S.P. Insertados!!!' });
 }
