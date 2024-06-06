@@ -2,6 +2,7 @@
 // https://gist.github.com/Klerith/3949f1c8b884d7101e378dfb668f0f3a
 
 import Link from "next/link";
+import { UserAvatar } from "@/components";
 
 const links = [
     { name: "Estudiantes Activos", href: "student-list" },
@@ -95,9 +96,7 @@ export default function DashboardLayout({
                         </div>
                         <div className="flex items-center">
                             {/* User Avatar */}
-                            <div className="bg-blue-500 text-white p-2 rounded-full w-12 h-12 flex items-center justify-center">
-                                AC
-                            </div>
+                            <UserAvatar />
                         </div>
                     </div>
                 </div>
