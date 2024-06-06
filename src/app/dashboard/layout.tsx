@@ -4,7 +4,7 @@
 import Link from "next/link";
 
 const links = [
-    { name: "accordion", href: "accordion" },
+    { name: "Lista de Estudiantes", href: "student-list" },
     { name: "alert", href: "alert" },
 ];
 
