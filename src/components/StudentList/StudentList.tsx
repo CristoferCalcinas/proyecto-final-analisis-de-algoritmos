@@ -31,10 +31,12 @@ export const StudentList = () => {
         <div className="px-4 sm:px-6 lg:px-8">
             <div className="sm:flex sm:items-center">
                 <div className="sm:flex-auto">
-                    <h1 className="text-base font-semibold leading-6 text-gray-900">Plans</h1>
+                    <h1 className="text-base font-semibold leading-6 text-gray-900">
+                        Lista de estudiantes Activos
+                    </h1>
                     <p className="mt-2 text-sm text-gray-700">
-                        Your team is on the <strong className="font-semibold text-gray-900">Startup</strong> plan. The next payment
-                        of $80 will be due on August 4, 2022.
+                        Todos estos estudiantes estan registrados en la web del{" "}
+                        <span className="font-semibold">Proyecto Final</span>
                     </p>
                 </div>
                 <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
@@ -51,28 +53,28 @@ export const StudentList = () => {
                     <thead>
                         <tr>
                             <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-                                Plan
+                                Nombre del estudiante
                             </th>
                             <th
                                 scope="col"
                                 className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
                             >
-                                Memory
+                                N° Carnet
                             </th>
                             <th
                                 scope="col"
                                 className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
                             >
-                                CPU
+                                Email
                             </th>
                             <th
                                 scope="col"
                                 className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
                             >
-                                Storage
+                                Facultad
                             </th>
                             <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                                Price
+                                Genero
                             </th>
                             <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
                                 <span className="sr-only">Select</span>
