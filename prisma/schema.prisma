@@ -26,24 +26,23 @@ model cursos_profesores {
 }
 
 model estudiante {
-  id               String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  nombre           String?         @db.VarChar(20)
-  apellido         String?         @db.VarChar(30)
-  carnet           String?         @unique @db.VarChar(20)
-  fecha_nacimiento DateTime?       @db.Date
-  email            String?         @unique @db.VarChar(100)
-  telefono         String?         @db.VarChar(15)
-  direccion        String?         @db.VarChar(200)
-  id_facultad      Int?
-  facultad         facultad?       @relation(fields: [id_facultad], references: [id], onUpdate: NoAction)
-  inscripciones    inscripciones[]
+  id                  String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  nombre              String?               @db.VarChar(20)
+  apellido            String?               @db.VarChar(30)
+  carnet              String?               @unique @db.VarChar(20)
+  fecha_nacimiento    DateTime?             @db.Date
+  email               String?               @unique @db.VarChar(100)
+  telefono            String?               @db.VarChar(15)
+  direccion           String?               @db.VarChar(200)
+  estudiante_facultad estudiante_facultad[]
+  inscripciones       inscripciones[]
 }
 
 model facultad {
-  id          Int          @id @default(autoincrement())
-  nombre      String?      @unique @db.VarChar(40)
-  descripcion String?
-  estudiante  estudiante[]
+  id                  Int                   @id @default(autoincrement())
+  nombre              String?               @unique @db.VarChar(40)
+  descripcion         String?
+  estudiante_facultad estudiante_facultad[]
 }
 
 model inscripciones {
@@ -64,4 +63,12 @@ model profesores {
   telefono          String?             @db.VarChar(15)
   direccion         String?             @db.VarChar(200)
   cursos_profesores cursos_profesores[]
+}
+
+model estudiante_facultad {
+  id            Int         @id @default(autoincrement())
+  id_estudiante String?     @db.Uuid
+  id_facultad   Int?
+  estudiante    estudiante? @relation(fields: [id_estudiante], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  facultad      facultad?   @relation(fields: [id_facultad], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
