@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const links = [
     { name: "Estudiantes Activos", href: "student-list" },
-    { name: "alert", href: "alert" },
+    { name: "Facultades", href: "faculties" },
 ];
 
 export default function DashboardLayout({
