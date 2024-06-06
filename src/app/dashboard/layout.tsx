@@ -54,7 +54,7 @@ export default function DashboardLayout({
                                 </svg>
                             </button>
                             <Link
-                                href="#"
+                                href="/dashboard/home"
                                 className="text-xl font-bold flex items-center lg:ml-2.5"
                             >
                                 {/* Logo */}
@@ -89,14 +89,14 @@ export default function DashboardLayout({
                                 </svg>
                                 <span className="self-center whitespace-nowrap ml-2">
                                     {" "}
-                                    Shadcn/ui
+                                    Analisis de Algoritmos
                                 </span>
                             </Link>
                         </div>
                         <div className="flex items-center">
                             {/* User Avatar */}
                             <div className="bg-blue-500 text-white p-2 rounded-full w-12 h-12 flex items-center justify-center">
-                                FH
+                                AC
                             </div>
                         </div>
                     </div>
