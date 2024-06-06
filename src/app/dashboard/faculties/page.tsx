@@ -1,8 +1,9 @@
+import { Faculty } from "@/components";
 
 export default function AlertPage() {
     return (
         <div>
-            <h1>Hello Page</h1>
+            <Faculty />
         </div>
     );
 }
