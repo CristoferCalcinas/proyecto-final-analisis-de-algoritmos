@@ -1,9 +1,10 @@
-import { Faculty } from "@/components";
+import { FacultyTable } from "@/components"
 
-export default function AlertPage() {
+
+export default function FacultyPage() {
     return (
         <div>
-            <Faculty />
+            <FacultyTable />
         </div>
     );
 }
