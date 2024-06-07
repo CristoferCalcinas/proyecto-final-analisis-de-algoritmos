@@ -26,6 +26,8 @@ interface Student {
 
 export const ButtonAddStudent = () => {
 
+    const [dialogOpen, setDialogOpen] = useState(false)
+
     const [newStudent, setNewStudent] = useState<Student>({
         nombre: "Pedro",
         apellido: "Duarte",
@@ -45,10 +47,11 @@ export const ButtonAddStudent = () => {
     const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         console.log(newStudent);
+        // setDialogOpen(false);
     };
 
     return (
-        <Dialog>
+        <Dialog open={dialogOpen} onOpenChange={(open) => { setDialogOpen(open) }}>
             <DialogTrigger asChild>
                 <Button variant="outline" className="border-2 border-black" >Agregar Estudiante</Button>
             </DialogTrigger>
