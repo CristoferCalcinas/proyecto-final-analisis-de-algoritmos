@@ -1,6 +1,7 @@
 'use server';
 
 import prisma from "@/lib/prisma";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 export const list_students = async () => {
     const students = await prisma.estudiante.findMany();
@@ -31,7 +32,6 @@ export const add_student = async (student:
         direccion: string;
     }) => {
 
-    console.log(student)
     try {
 
         const newStudent = await prisma.$queryRaw`
@@ -44,12 +44,32 @@ export const add_student = async (student:
                 ${student.direccion})
             `
 
-        return newStudent;
+        return {
+            newStudent,
+            status: 200
+        };
     } catch (error) {
-        console.log('---------------------------------------------------')
+        console.log('\n\n-------------------------ERROR-ADD-STUDENT--------------------------')
         console.error(error);
-        console.log('---------------------------------------------------')
-        return null;
+        console.log('-------------------------ERROR-ADD-STUDENT--------------------------\n\n')
+
+        // Manejar errores específicos de Prisma
+        if (error instanceof PrismaClientKnownRequestError) {
+            // Aquí puedes acceder a las propiedades específicas del error
+            const errorMessage = error.meta;
+
+            return {
+                error: errorMessage?.message,
+                status: 400
+            };
+        }
+
+        // Manejar otros tipos de errores si es necesario
+        return {
+            error: 'An unknown error occurred',
+            status: 500
+        };
     }
 
 }
+

@@ -49,8 +49,15 @@ export const ButtonAddStudent = () => {
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         console.log(newStudent);
-        await add_student(newStudent);
-        // setDialogOpen(false);
+        const response = await add_student(newStudent);
+        if (response && response.status && response.status === 200) {
+            setDialogOpen(false);
+            console.log('Estudiante agregado correctamente');
+            return;
+        }
+        console.log(response)
+
+
     };
 
     return (
