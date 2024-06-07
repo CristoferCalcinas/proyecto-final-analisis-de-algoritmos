@@ -20,3 +20,36 @@ export const list_students = async () => {
 
     return formattedStudents;
 }
+
+export const add_student = async (student:
+    {
+        nombre: string;
+        apellido: string;
+        carnet: string;
+        fecha_nacimiento: string;
+        telefono: string;
+        direccion: string;
+    }) => {
+
+    console.log(student)
+    try {
+
+        const newStudent = await prisma.$queryRaw`
+            Call insertar_estudiantes(
+                ${student.nombre},
+                ${student.apellido},
+                ${student.carnet},
+                ${new Date(student.fecha_nacimiento).toISOString().split('T')[0]}::DATE,
+                ${student.telefono},
+                ${student.direccion})
+            `
+
+        return newStudent;
+    } catch (error) {
+        console.log('---------------------------------------------------')
+        console.error(error);
+        console.log('---------------------------------------------------')
+        return null;
+    }
+
+}

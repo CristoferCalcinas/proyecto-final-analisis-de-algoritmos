@@ -15,6 +15,8 @@ import { Label } from "@/components/ui/label"
 import { useState } from "react";
 // import { DialogClose } from "@radix-ui/react-dialog";
 
+import { add_student } from "@/actions/studen-list-actions";
+
 interface Student {
     nombre: string;
     apellido: string;
@@ -44,9 +46,10 @@ export const ButtonAddStudent = () => {
         });
     };
 
-    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         console.log(newStudent);
+        await add_student(newStudent);
         // setDialogOpen(false);
     };
 
