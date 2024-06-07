@@ -12,10 +12,40 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { DialogClose } from "@radix-ui/react-dialog";
+import { useState } from "react";
+// import { DialogClose } from "@radix-ui/react-dialog";
 
+interface Student {
+    nombre: string;
+    apellido: string;
+    carnet: string;
+    fecha_nacimiento: string;
+    telefono: string;
+    direccion: string;
+}
 
 export const ButtonAddStudent = () => {
+
+    const [newStudent, setNewStudent] = useState<Student>({
+        nombre: "Pedro",
+        apellido: "Duarte",
+        carnet: "CARNET000",
+        fecha_nacimiento: "2000-01-01",
+        telefono: "555-000000",
+        direccion: "Calle Falsa XXX"
+    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setNewStudent({
+            ...newStudent,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        console.log(newStudent);
+    };
 
     return (
         <Dialog>
@@ -36,7 +66,8 @@ export const ButtonAddStudent = () => {
                         </Label>
                         <Input
                             id="nombre"
-                            defaultValue="Pedro"
+                            defaultValue={newStudent.nombre}
+                            onChange={handleChange}
                             className="col-span-3"
                         />
                     </div>
@@ -46,7 +77,8 @@ export const ButtonAddStudent = () => {
                         </Label>
                         <Input
                             id="apellido"
-                            defaultValue="Duarte"
+                            defaultValue={newStudent.apellido}
+                            onChange={handleChange}
                             className="col-span-3"
                         />
                     </div>
@@ -56,7 +88,8 @@ export const ButtonAddStudent = () => {
                         </Label>
                         <Input
                             id="carnet_identidad"
-                            defaultValue="CARNET000"
+                            defaultValue={newStudent.carnet}
+                            onChange={handleChange}
                             className="col-span-3"
                         />
                     </div>
@@ -68,7 +101,8 @@ export const ButtonAddStudent = () => {
                             className="col-span-3"
                             id="fecha_nacimiento"
                             type="date"
-                            defaultValue={new Date().toISOString().split('T')[0]}
+                            onChange={handleChange}
+                            defaultValue={newStudent.fecha_nacimiento}
                         />
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
@@ -79,6 +113,7 @@ export const ButtonAddStudent = () => {
                             type="tel"
                             id="telefono"
                             defaultValue="555-000000"
+                            onChange={handleChange}
                             className="col-span-3"
                         />
                     </div>
@@ -88,14 +123,18 @@ export const ButtonAddStudent = () => {
                         </Label>
                         <Input
                             id="direccion"
-                            defaultValue="Calle Falsa 112"
+                            defaultValue={newStudent.direccion}
+                            onChange={handleChange}
                             className="col-span-3"
                         />
                     </div>
                 </div>
                 <DialogFooter>
                     {/* <DialogClose asChild> */}
-                    <Button type="submit">
+                    <Button
+                        type="submit"
+                        onClick={handleSubmit}
+                    >
                         Agregar Estudiante
                     </Button>
                     {/* </DialogClose> */}
