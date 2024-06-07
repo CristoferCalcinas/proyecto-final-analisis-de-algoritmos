@@ -8,7 +8,7 @@ interface State {
 }
 
 export const useDashboardStore = create<State>()((set) => ({
-    is_admin: false,
+    is_admin: true,
     name: '',
 
     setName: (p_name) => set({ name: p_name }),
