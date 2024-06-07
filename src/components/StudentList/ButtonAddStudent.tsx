@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { DialogClose } from "@radix-ui/react-dialog";
 
 
 export const ButtonAddStudent = () => {
@@ -19,7 +20,7 @@ export const ButtonAddStudent = () => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="outline">Agregar Estudiante</Button>
+                <Button variant="outline" className="border-2 border-black" >Agregar Estudiante</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
@@ -60,6 +61,28 @@ export const ButtonAddStudent = () => {
                         />
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="fecha_nacimiento" className="text-right">
+                            Fecha de Nacimiento
+                        </Label>
+                        <Input
+                            className="col-span-3"
+                            id="fecha_nacimiento"
+                            type="date"
+                            defaultValue={new Date().toISOString().split('T')[0]}
+                        />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="telefono" className="text-right">
+                            Telefono
+                        </Label>
+                        <Input
+                            type="tel"
+                            id="telefono"
+                            defaultValue="555-000000"
+                            className="col-span-3"
+                        />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="direccion" className="text-right">
                             Direccion
                         </Label>
@@ -71,7 +94,11 @@ export const ButtonAddStudent = () => {
                     </div>
                 </div>
                 <DialogFooter>
-                    <Button type="submit">Save changes</Button>
+                    {/* <DialogClose asChild> */}
+                    <Button type="submit">
+                        Agregar Estudiante
+                    </Button>
+                    {/* </DialogClose> */}
                 </DialogFooter>
             </DialogContent>
         </Dialog>
