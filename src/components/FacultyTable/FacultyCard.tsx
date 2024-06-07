@@ -1,3 +1,5 @@
+import { FacultyAvatar } from "./FacultyAvatar";
+
 interface Props {
     id: number;
     nombre: string | null;
@@ -9,12 +11,8 @@ export const FacultyCard = ({ id, nombre, descripcion }: Props) => {
     return (
         <div>
             <div className="relative">
-                <div className="relative h-72 w-full overflow-hidden rounded-lg">
-                    {/* <img
-                        src={product.imageSrc}
-                        alt={product.imageAlt}
-                        className="h-full w-full object-cover object-center"
-                    /> */}
+                <div className="relative h-72 w-full overflow-hidden rounded-lg flex items-center justify-center">
+                    <FacultyAvatar nombre={nombre} />
                 </div>
                 <div className="relative mt-4 text-center">
                     <h3 className="text-sm font-medium text-gray-900">{nombre}</h3>
@@ -33,7 +31,7 @@ export const FacultyCard = ({ id, nombre, descripcion }: Props) => {
                     // onClick={traer_todas_facultades_test}
                     className="relative mx-auto flex items-center justify-center rounded-md border border-transparent bg-gray-100 px-8 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200"
                 >
-                    Editar <span className="sr-only">, {nombre}</span>
+                    {nombre}
                 </button>
             </div>
         </div>
