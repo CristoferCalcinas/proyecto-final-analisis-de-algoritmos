@@ -34,7 +34,7 @@ export const add_student = async (student:
 
     try {
 
-        const newStudent = await prisma.$queryRaw`
+        await prisma.$queryRaw`
             Call insertar_estudiantes(
                 ${student.nombre},
                 ${student.apellido},
@@ -43,9 +43,8 @@ export const add_student = async (student:
                 ${student.telefono},
                 ${student.direccion})
             `
-
         return {
-            newStudent,
+            message: 'Estudiante agregado correctamente',
             status: 200
         };
     } catch (error) {
@@ -56,7 +55,7 @@ export const add_student = async (student:
         // Manejar errores específicos de Prisma
         if (error instanceof PrismaClientKnownRequestError) {
             // Aquí puedes acceder a las propiedades específicas del error
-            const errorMessage = error.meta;
+            const errorMessage = error.meta as { message: string };
 
             return {
                 error: errorMessage?.message,

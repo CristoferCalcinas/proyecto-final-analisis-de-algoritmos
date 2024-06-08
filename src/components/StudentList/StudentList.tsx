@@ -1,6 +1,6 @@
 'use client';
 import { useDashboardStore } from "@/store";
-import { ButtonAddStudent } from "./ButtonAddStudent"
+import { ButtonAddStudentWithDialog } from "./ButtonAddStudentWithDialog"
 import { TableStudents } from "./TableStudents";
 
 export const StudentList = () => {
@@ -21,7 +21,7 @@ export const StudentList = () => {
                 </div>
                 {/* Boton para listar todos los estudiantes */}
                 {
-                    has_permission ? <ButtonAddStudent /> : null
+                    has_permission ? <ButtonAddStudentWithDialog /> : null
                 }
             </div>
             <div className="-mx-4 mt-10 ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg">

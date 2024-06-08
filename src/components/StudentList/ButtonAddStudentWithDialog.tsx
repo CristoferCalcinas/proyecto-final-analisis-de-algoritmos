@@ -27,15 +27,16 @@ interface Student {
     direccion: string;
 }
 
-export const ButtonAddStudent = () => {
+export const ButtonAddStudentWithDialog = () => {
 
     // Estado para controlar si el dialogo esta abierto o cerrado
     const [dialogOpen, setDialogOpen] = useState(false)
 
     // Estado para controlar el error al agregar un estudiante
-    const [error, setError] = useState<{ status: boolean; message: unknown; }>({
+    const [error, setError] = useState<{ status: boolean; message: unknown;}>({
         status: false,
-        message: ''
+        message: '',
+        // itemError: ''
     });
 
     // Estado para controlar el nuevo estudiante a agregar
@@ -61,11 +62,13 @@ export const ButtonAddStudent = () => {
         const response = await add_student(newStudent);
         if (response && response.status && response.status === 200) {
             setDialogOpen(false);
+            setError({ status: false, message: ''});
             console.log('Estudiante agregado correctamente');
             return;
         }
         setError({ status: true, message: response.error });
-
+        // // const errorField = response?.error?.split(" ")[1].split("=")[0].replace(")", "").replace("(","");
+        // setError({ status: true, message: response.error, itemError: errorField!});   
     };
 
     return (
@@ -88,6 +91,7 @@ export const ButtonAddStudent = () => {
                         </Label>
                         <Input
                             id="nombre"
+                            name="nombre"
                             defaultValue={newStudent.nombre}
                             onChange={handleChange}
                             className="col-span-3"
@@ -99,6 +103,7 @@ export const ButtonAddStudent = () => {
                         </Label>
                         <Input
                             id="apellido"
+                            name="apellido"
                             defaultValue={newStudent.apellido}
                             onChange={handleChange}
                             className="col-span-3"
@@ -109,7 +114,8 @@ export const ButtonAddStudent = () => {
                             CI
                         </Label>
                         <Input
-                            id="carnet_identidad"
+                            id="carnet"
+                            name="carnet"
                             defaultValue={newStudent.carnet}
                             onChange={handleChange}
                             className="col-span-3"
@@ -122,6 +128,7 @@ export const ButtonAddStudent = () => {
                         <Input
                             className="col-span-3"
                             id="fecha_nacimiento"
+                            name="fecha_nacimiento"
                             type="date"
                             onChange={handleChange}
                             defaultValue={newStudent.fecha_nacimiento}
@@ -134,6 +141,7 @@ export const ButtonAddStudent = () => {
                         <Input
                             type="tel"
                             id="telefono"
+                            name="telefono"
                             defaultValue="555-000000"
                             onChange={handleChange}
                             className="col-span-3"
@@ -145,6 +153,7 @@ export const ButtonAddStudent = () => {
                         </Label>
                         <Input
                             id="direccion"
+                            name="direccion"
                             defaultValue={newStudent.direccion}
                             onChange={handleChange}
                             className="col-span-3"
