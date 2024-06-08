@@ -16,6 +16,7 @@ import { useState } from "react";
 // import { DialogClose } from "@radix-ui/react-dialog";
 
 import { add_student } from "@/actions/studen-list-actions";
+import { AlertForAddStudent } from "./AlertForAddStudent";
 
 interface Student {
     nombre: string;
@@ -28,8 +29,16 @@ interface Student {
 
 export const ButtonAddStudent = () => {
 
+    // Estado para controlar si el dialogo esta abierto o cerrado
     const [dialogOpen, setDialogOpen] = useState(false)
 
+    // Estado para controlar el error al agregar un estudiante
+    const [error, setError] = useState<{ status: boolean; message: unknown; }>({
+        status: false,
+        message: ''
+    });
+
+    // Estado para controlar el nuevo estudiante a agregar
     const [newStudent, setNewStudent] = useState<Student>({
         nombre: "Pedro",
         apellido: "Duarte",
@@ -55,8 +64,7 @@ export const ButtonAddStudent = () => {
             console.log('Estudiante agregado correctamente');
             return;
         }
-        console.log(response)
-
+        setError({ status: true, message: response.error });
 
     };
 
@@ -66,11 +74,12 @@ export const ButtonAddStudent = () => {
                 <Button variant="outline" className="border-2 border-black" >Agregar Estudiante</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader>
+                <DialogHeader className="space-y-3">
                     <DialogTitle>Nuevo Estudiante</DialogTitle>
                     <DialogDescription>
                         Agrega un nuevo estudiante a la lista de estudiantes activos
                     </DialogDescription>
+                    {error.status && <AlertForAddStudent titleError={error.message} />}
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
                     <div className="grid grid-cols-4 items-center gap-4">
