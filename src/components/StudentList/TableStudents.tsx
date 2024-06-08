@@ -7,7 +7,7 @@ function classNames(...classes: string[]) {
 }
 
 export const TableStudents = (
-    { has_authorization = false }: { has_authorization: boolean }
+    { has_authorization = false, reloadTables }: { has_authorization: boolean;reloadTables: boolean }
 ) => {
     const [allStudents, setAllStudents] = useState<any[]>([]);
 
@@ -15,7 +15,7 @@ export const TableStudents = (
         list_students().then((response) => {
             setAllStudents(response);
         });
-    }, [])
+    }, [reloadTables])
 
     return (
         <table className="min-w-full divide-y divide-gray-300">

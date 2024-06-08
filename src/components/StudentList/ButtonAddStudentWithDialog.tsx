@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button"
 import {
     Dialog,
@@ -12,7 +13,6 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useState } from "react";
 // import { DialogClose } from "@radix-ui/react-dialog";
 
 import { add_student } from "@/actions/studen-list-actions";
@@ -27,13 +27,15 @@ interface Student {
     direccion: string;
 }
 
-export const ButtonAddStudentWithDialog = () => {
+export const ButtonAddStudentWithDialog = ({ reloadTables }:
+    { reloadTables: () => void }
+) => {
 
     // Estado para controlar si el dialogo esta abierto o cerrado
     const [dialogOpen, setDialogOpen] = useState(false)
 
     // Estado para controlar el error al agregar un estudiante
-    const [error, setError] = useState<{ status: boolean; message: unknown;}>({
+    const [error, setError] = useState<{ status: boolean; message: unknown; }>({
         status: false,
         message: '',
         // itemError: ''
@@ -62,8 +64,9 @@ export const ButtonAddStudentWithDialog = () => {
         const response = await add_student(newStudent);
         if (response && response.status && response.status === 200) {
             setDialogOpen(false);
-            setError({ status: false, message: ''});
+            setError({ status: false, message: '' });
             console.log('Estudiante agregado correctamente');
+            reloadTables();
             return;
         }
         setError({ status: true, message: response.error });
