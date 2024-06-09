@@ -67,6 +67,7 @@ export const Presentation = () => {
               imageAlt={"Acceso a la pagina con los permisos de cliente"}
               name={"Clientes"}
               href={"/dashboard/student-list"}
+              changePermission={true}
             />
 
             <PerfilCard
@@ -74,6 +75,7 @@ export const Presentation = () => {
               imageAlt={"Acceso a la pagina con los permisos de Administrador"}
               name={"Administradores"}
               href={"/auth/login"}
+              changePermission={false}
             />
 
         </div>

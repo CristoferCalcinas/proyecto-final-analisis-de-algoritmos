@@ -1,14 +1,24 @@
+'use client';
+
 import Link from "next/link";
+import { useDashboardStore } from "@/store";
+import { useEffect } from "react";
 
 interface Props {
     imageSrc: string;
     imageAlt: string;
     name: string;
     href: string;
+    changePermission: boolean;
 }
 
 
-export const PerfilCard = ({ imageSrc, imageAlt, name, href }: Props) => {
+export const PerfilCard = ({ imageSrc, imageAlt, name, href, changePermission }: Props) => {
+    const setIsAdmin = useDashboardStore(state => state.setIsAdmin);
+
+    useEffect(() => {
+        if (changePermission) setIsAdmin(false);
+    }, [changePermission]);
     return (
         <div
             className="group relative h-96 rounded-lg bg-white shadow-xl sm:aspect-h-5 sm:aspect-w-4"
