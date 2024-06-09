@@ -1,6 +1,7 @@
 import Image from "next/image"
-import { PerfilCard } from "./PerfilCard"
 import Link from "next/link"
+
+import { PerfilCard } from "./PerfilCard"
 
 export const Presentation = () => {
   return (
