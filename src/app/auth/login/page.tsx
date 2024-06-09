@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import clsx from "clsx";
 import {
     InputOTP,
     InputOTPGroup,
@@ -8,8 +10,8 @@ import {
     InputOTPSlot,
 } from "@/components/ui/input-otp"
 import { Button } from "@/components/ui/button";
-import clsx from "clsx";
-import { useRouter } from "next/navigation";
+
+import { useDashboardStore } from "@/store";
 
 export default function LoginPage() {
 
@@ -17,12 +19,15 @@ export default function LoginPage() {
     const [error, setError] = useState(false);
     const router = useRouter();
 
+    const setIsAdmin = useDashboardStore(state => state.setIsAdmin);
+
     const onValidateCode = () => {
         const isValid = code === "123456";
         setError(!isValid);
 
         if (isValid) {
-            router.push("/dashboard/home");
+            setIsAdmin(true);
+            router.push("/dashboard/student-list");
         } else {
             setTimeout(() => {
                 setError(false);
