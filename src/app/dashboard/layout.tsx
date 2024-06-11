@@ -6,7 +6,7 @@ import { UserAvatar } from "@/components";
 
 const links = [
     { name: "Estudiantes Activos", href: "student-list" },
-    { name: "Facultades", href: "faculties" },
+    { name: "Facultades Activas", href: "faculties" },
     { name: "Buscar Estudiante", href: "find-student" },
     { name: "Ordenar Estudiantes", href: "sort-student" },
     { name: "Buscar Facultad", href: "find-faculty" },
