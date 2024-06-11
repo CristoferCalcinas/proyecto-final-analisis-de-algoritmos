@@ -7,6 +7,10 @@ import { UserAvatar } from "@/components";
 const links = [
     { name: "Estudiantes Activos", href: "student-list" },
     { name: "Facultades", href: "faculties" },
+    { name: "Buscar Estudiante", href: "find-student" },
+    { name: "Ordenar Estudiantes", href: "sort-student" },
+    { name: "Buscar Facultad", href: "find-faculty" },
+    { name: "Ordenar Facultades", href: "sort-faculty" },
 ];
 
 export default function DashboardLayout({
@@ -256,7 +260,7 @@ export default function DashboardLayout({
                         </div>
                     </footer>
                     <p className="text-center text-sm text-gray-500 my-10">
-                        &copy; 2019-{new Date().getFullYear()}{" "}
+                        &copy; 2023-{new Date().getFullYear()}{" "}
                         <Link href="#" className="hover:underline" target="_blank">
                             Themesberg
                         </Link>
