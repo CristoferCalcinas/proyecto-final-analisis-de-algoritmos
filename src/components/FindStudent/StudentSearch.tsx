@@ -1,101 +1,102 @@
-import { useState } from 'react'
-import {
-    Combobox,
-    ComboboxInput,
-    ComboboxOption,
-    ComboboxOptions,
-    Dialog,
-    DialogPanel,
-    Transition,
-    TransitionChild,
-} from '@headlessui/react'
-import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
+'use client'
+import { list_students } from '@/actions/studen-list-actions';
+import { linearSearch } from '@/lib/linearSearch';
+import { useEffect, useState } from 'react'
 
-const people = [
-    { id: 1, name: 'Leslie Alexander', url: '#' },
-    // More people...
-]
 
-function classNames(...classes: (string | boolean | undefined)[]) {
-    return classes.filter(Boolean).join(' ')
+interface Student {
+    id: string;
+    nombre_estudiante: string;
+    numero_carnet: string | null;
+    email: string | null;
+    direccion: string | null;
+    edad: number | null;
 }
 
 export const StudentSearch = () => {
-    const [query, setQuery] = useState('')
-    const [open, setOpen] = useState(true)
+    const [query, setQuery] = useState('');
 
-    const filteredPeople =
-        query === ''
-            ? []
-            : people.filter((person) => {
-                return person.name.toLowerCase().includes(query.toLowerCase())
-            })
+    const [students, setStudents] = useState<Student[]>([]);
+
+    const [indexStudentList, setIndexStudentList] = useState<Student[]>([]);
+
+    useEffect(() => {
+        list_students().then((response) => {
+            setStudents(response);
+        });
+    }, [])
+
+    const onSubmitSearchStudent = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const list_name_students_split = students.map((student) => student.nombre_estudiante.split(' '));
+        let student_list_aux: Student[] = [];
+        list_name_students_split.forEach((
+            names_split,
+            index
+        ) => {
+            // Aplicando la búsqueda lineal
+            const is_found = linearSearch(names_split, query);
+            if (is_found) {
+                console.log('Estudiante encontrado');
+                console.log(index);
+                student_list_aux.push(students[index]);
+            }
+        })
+        setIndexStudentList(student_list_aux);
+    }
+
+    // const filteredPeople =
+    //     query === ''
+    //         ? []
+    //         : students.filter((person) => {
+    //             return person.name.toLowerCase().includes(query.toLowerCase())
+    //         })
 
     return (
-        <Transition show={open} afterLeave={() => setQuery('')} appear>
-            <Dialog className="relative z-10" onClose={setOpen}>
-                <TransitionChild
-                    enter="ease-out duration-300"
-                    enterFrom="opacity-0"
-                    enterTo="opacity-100"
-                    leave="ease-in duration-200"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                >
-                    <div className="fixed inset-0 bg-gray-500 bg-opacity-25 transition-opacity" />
-                </TransitionChild>
-
-                <div className="fixed inset-0 z-10 w-screen overflow-y-auto p-4 sm:p-6 md:p-20">
-                    <TransitionChild
-                        enter="ease-out duration-300"
-                        enterFrom="opacity-0 scale-95"
-                        enterTo="opacity-100 scale-100"
-                        leave="ease-in duration-200"
-                        leaveFrom="opacity-100 scale-100"
-                        leaveTo="opacity-0 scale-95"
-                    >
-                        <DialogPanel className="mx-auto max-w-xl transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all">
-                            <Combobox
-                                onChange={(person: { url: any }) => (window.location = person.url)}
-                            >
-                                <div className="relative">
-                                    <MagnifyingGlassIcon
-                                        className="pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-gray-400"
-                                        aria-hidden="true"
-                                    />
-                                    <ComboboxInput
-                                        autoFocus
-                                        className="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm"
-                                        placeholder="Search..."
-                                        onChange={(event) => setQuery(event.target.value)}
-                                        onBlur={() => setQuery('')}
-                                    />
-                                </div>
-
-                                {filteredPeople.length > 0 && (
-                                    <ComboboxOptions static className="max-h-72 scroll-py-2 overflow-y-auto py-2 text-sm text-gray-800">
-                                        {filteredPeople.map((person) => (
-                                            <ComboboxOption
-                                                key={person.id}
-                                                value={person}
-                                                className={({ focus }) =>
-                                                    classNames('cursor-default select-none px-4 py-2', focus && 'bg-indigo-600 text-white')
-                                                }
-                                            >
-                                                {((person as { name: string }).name) as string}
-                                            </ComboboxOption>
-                                        ))}
-                                    </ComboboxOptions>
-                                )}
-
-                                {query !== '' && filteredPeople.length === 0 && (
-                                    <p className="p-4 text-sm text-gray-500">No people found.</p>
-                                )}
-                            </Combobox>
-                        </DialogPanel>
-                    </TransitionChild>
+        <div className="bg-white shadow sm:rounded-lg">
+            <div className="px-4 py-5 sm:p-6">
+                <h3 className="text-base font-semibold leading-6 text-gray-900">
+                    Buscar Estudiante
+                </h3>
+                <div className="mt-2 max-w-xl text-sm text-gray-500">
+                    <p>
+                        Ingrese el correo electrónico del estudiante que desea buscar.
+                    </p>
                 </div>
-            </Dialog>
-        </Transition>
+                <form
+                    onSubmit={onSubmitSearchStudent}
+                    className="mt-5 sm:flex sm:items-center">
+                    <div className="w-full sm:max-w-xs">
+                        <label htmlFor="user" className="sr-only">
+                            Usuario
+                        </label>
+                        <input
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value.toLocaleLowerCase())}
+                            type="text"
+                            name="user"
+                            id="user"
+                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-3"
+                            placeholder="you.lastname@uab.edu.bo"
+                        />
+                    </div>
+                    <button
+                        type="submit"
+                        className="mt-3 inline-flex w-full items-center justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:ml-3 sm:mt-0 sm:w-auto"
+                    >
+                        Buscar
+                    </button>
+                </form>
+            </div>
+            <div className=''>
+                {
+                    indexStudentList.length > 0 && (
+                        <pre>
+                            {JSON.stringify(indexStudentList, null, 2)}
+                        </pre>
+                    )
+                }
+            </div>
+        </div>
     )
 }

@@ -4,6 +4,12 @@
 import Link from "next/link";
 import { UserAvatar } from "@/components";
 
+
+export const metadata = {
+ title: 'Analisis de Algoritmos',
+ description: 'Dashboard Administrativo de Estudiantes',
+};
+
 const links = [
     { name: "Estudiantes Activos", href: "student-list" },
     { name: "Facultades Activas", href: "faculties" },
