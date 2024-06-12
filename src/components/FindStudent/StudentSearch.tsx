@@ -1,7 +1,8 @@
 'use client'
+import { useEffect, useState } from 'react'
 import { list_students } from '@/actions/studen-list-actions';
 import { linearSearch } from '@/lib/linearSearch';
-import { useEffect, useState } from 'react'
+import { ShowTableForIndexStudent } from './ShowTableForIndexStudent';
 
 
 interface Student {
@@ -26,6 +27,7 @@ export const StudentSearch = () => {
         });
     }, [])
 
+    // Funcion para la busqueda de estudiantes aplicando el algoritmo de busqueda(linearSearch)
     const onSubmitSearchStudent = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const list_name_students_split = students.map((student) => student.nombre_estudiante.split(' '));
@@ -37,8 +39,6 @@ export const StudentSearch = () => {
             // Aplicando la búsqueda lineal
             const is_found = linearSearch(names_split, query);
             if (is_found) {
-                console.log('Estudiante encontrado');
-                console.log(index);
                 student_list_aux.push(students[index]);
             }
         })
@@ -90,11 +90,9 @@ export const StudentSearch = () => {
             </div>
             <div className=''>
                 {
-                    indexStudentList.length > 0 && (
-                        <pre>
-                            {JSON.stringify(indexStudentList, null, 2)}
-                        </pre>
-                    )
+                    indexStudentList.map((student) => (
+                        <ShowTableForIndexStudent key={student.id} {...student} />
+                    ))
                 }
             </div>
         </div>
