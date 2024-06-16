@@ -16,7 +16,7 @@ function merge(left: number[], right: number[]): number[] {
         .concat(right.slice(rightIndex));
 }
 
-function mergeSort(unsortedArray: number[]): number[] {
+export function mergeSort(unsortedArray: number[]): number[] {
     if (unsortedArray.length <= 1) {
         return unsortedArray;
     }
