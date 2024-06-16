@@ -31,7 +31,7 @@ export const StudentList = () => {
                 }
             </div>
             <div className="-mx-4 mt-10 ring-1 ring-gray-300 sm:mx-0 sm:rounded-lg">
-                <TableStudents has_authorization={false} reloadTables={reloadTableStudents} />
+                <TableStudents has_authorization={has_permission} reloadTables={reloadTableStudents} />
             </div>
         </div>
     )

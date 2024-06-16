@@ -1,13 +1,14 @@
 'use client';
 import { useState, useEffect } from "react";
-import { list_students } from "@/actions/studen-list-actions";
+import { delete_student, list_students } from "@/actions/studen-list-actions";
+import { TrashIcon } from '@heroicons/react/24/outline';
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
 export const TableStudents = (
-    { has_authorization = false, reloadTables }: { has_authorization: boolean;reloadTables: boolean }
+    { has_authorization = false, reloadTables }: { has_authorization: boolean; reloadTables: boolean }
 ) => {
     const [allStudents, setAllStudents] = useState<any[]>([]);
 
@@ -16,6 +17,14 @@ export const TableStudents = (
             setAllStudents(response);
         });
     }, [reloadTables])
+
+    const handleDeleteStudent = (id: string) => {
+        delete_student(id).then(() => {
+            list_students().then((response) => {
+                setAllStudents(response);
+            });
+        });
+    }
 
     return (
         <table className="min-w-full divide-y divide-gray-300">
@@ -113,10 +122,11 @@ export const TableStudents = (
                                 >
                                     <button
                                         type="button"
-                                        className="inline-flex items-center rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-white"
-                                        disabled={id}
+                                        className="inline-flex items-center rounded-md bg-red-400 px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:bg-white"
+                                        onClick={() => handleDeleteStudent(id)}
                                     >
-                                        Select<span className="sr-only">, {nombre_estudiante}</span>
+                                        <TrashIcon className="h-5 w-5" />
+                                        <span className="sr-only">, {nombre_estudiante}</span>
                                     </button>
                                 </td>
                             )
