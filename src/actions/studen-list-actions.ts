@@ -72,3 +72,82 @@ export const add_student = async (student:
 
 }
 
+export const update_student = async (student: {
+    id: number;
+    nombre: string;
+    apellido: string;
+    carnet: string;
+    fecha_nacimiento: string;
+    telefono: string;
+    direccion: string;
+}) => {
+    try {
+        await prisma.$queryRaw`
+            Call actualizar_estudiantes(
+                ${student.id},
+                ${student.nombre},
+                ${student.apellido},
+                ${student.carnet},
+                ${new Date(student.fecha_nacimiento).toISOString().split('T')[0]}::DATE,
+                ${student.telefono},
+                ${student.direccion})
+            `
+        return {
+            message: 'Estudiante actualizado correctamente',
+            status: 200
+        };
+    } catch (error) {
+        console.log('\n\n-------------------------ERROR-UPDATE-STUDENT--------------------------')
+        console.error(error);
+        console.log('-------------------------ERROR-UPDATE-STUDENT--------------------------\n\n')
+
+        // Manejar errores específicos de Prisma
+        if (error instanceof PrismaClientKnownRequestError) {
+            // Aquí puedes acceder a las propiedades específicas del error
+            const errorMessage = error.meta as { message: string };
+
+            return {
+                error: errorMessage?.message,
+                status: 400
+            };
+        }
+
+        // Manejar otros tipos de errores si es necesario
+        return {
+            error: 'An unknown error occurred',
+            status: 500
+        };
+    }
+}
+
+
+export const delete_student = async (id: string) => {
+    try {
+        await prisma.estudiante.delete({
+            where: {
+                id
+            }
+        });
+    } catch (error) {
+        console.log('\n\n-------------------------ERROR-DELETE-STUDENT--------------------------')
+        console.error(error);
+        console.log('-------------------------ERROR-DELETE-STUDENT--------------------------\n\n')
+
+        // Manejar errores específicos de Prisma
+        if (error instanceof PrismaClientKnownRequestError) {
+            // Aquí puedes acceder a las propiedades específicas del error
+            const errorMessage = error.meta as { message: string };
+
+            return {
+                error: errorMessage?.message,
+                status: 400
+            };
+        }
+
+        // Manejar otros tipos de errores si es necesario
+        return {
+            error: 'An unknown error occurred',
+            status: 500
+        };
+    }
+}
