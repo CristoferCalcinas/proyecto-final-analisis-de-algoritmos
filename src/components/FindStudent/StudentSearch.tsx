@@ -43,6 +43,7 @@ export const StudentSearch = () => {
             }
         })
         setIndexStudentList(student_list_aux);
+        setQuery('');
     }
 
     // const filteredPeople =
