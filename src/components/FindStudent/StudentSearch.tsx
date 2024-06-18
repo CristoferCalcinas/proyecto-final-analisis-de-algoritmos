@@ -31,6 +31,7 @@ export const StudentSearch = () => {
     const onSubmitSearchStudent = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const list_name_students_split = students.map((student) => student.nombre_estudiante.split(' '));
+        // console.log(list_name_students_split)
         let student_list_aux: Student[] = [];
         list_name_students_split.forEach((
             names_split,
