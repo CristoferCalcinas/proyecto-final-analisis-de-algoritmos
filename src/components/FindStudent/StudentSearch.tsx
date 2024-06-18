@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { list_students } from '@/actions/studen-list-actions';
 import { linearSearch } from '@/lib/linearSearch';
 import { ShowTableForIndexStudent } from './ShowTableForIndexStudent';
+import { Queue } from '@/lib/queue';
 
 
 interface Student {
@@ -14,6 +15,11 @@ interface Student {
     edad: number | null;
 }
 
+const 
+    list_name_students_split = 
+        new 
+            Queue<string[]>(); list_name_students_split.enqueue(['']);
+    
 export const StudentSearch = () => {
     const [query, setQuery] = useState('');
 
@@ -53,7 +59,6 @@ export const StudentSearch = () => {
     //         : students.filter((person) => {
     //             return person.name.toLowerCase().includes(query.toLowerCase())
     //         })
-
     return (
         <div className="bg-white shadow sm:rounded-lg">
             <div className="px-4 py-5 sm:p-6">
